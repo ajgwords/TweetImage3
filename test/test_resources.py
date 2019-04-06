@@ -9,16 +9,16 @@
 """
 
 __author__ = 'llansteffan@hotmail.com'
-__date__ = '2015-12-08'
-__copyright__ = 'Copyright 2015, ajggeoger'
+__date__ = '2019-04-06'
+__copyright__ = 'Copyright 2019, Al Graham'
 
 import unittest
 
-from PyQt4.QtGui import QIcon
+from PyQt5.QtGui import QIcon
 
 
 
-class TweetImageDialogTest(unittest.TestCase):
+class TweetImage3DialogTest(unittest.TestCase):
     """Test rerources work."""
 
     def setUp(self):
@@ -31,12 +31,12 @@ class TweetImageDialogTest(unittest.TestCase):
 
     def test_icon_png(self):
         """Test we can click OK."""
-        path = ':/plugins/TweetImage/icon.png'
+        path = ':/plugins/TweetImage3/icon.png'
         icon = QIcon(path)
         self.assertFalse(icon.isNull())
 
 if __name__ == "__main__":
-    suite = unittest.makeSuite(TweetImageResourcesTest)
+    suite = unittest.makeSuite(TweetImage3ResourcesTest)
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite)
 

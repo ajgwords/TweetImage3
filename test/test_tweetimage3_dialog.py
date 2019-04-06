@@ -9,25 +9,25 @@
 """
 
 __author__ = 'llansteffan@hotmail.com'
-__date__ = '2015-12-08'
-__copyright__ = 'Copyright 2015, ajggeoger'
+__date__ = '2019-04-06'
+__copyright__ = 'Copyright 2019, Al Graham'
 
 import unittest
 
-from PyQt4.QtGui import QDialogButtonBox, QDialog
+from PyQt5.QtGui import QDialogButtonBox, QDialog
 
-from tweet_image_dialog import TweetImageDialog
+from tweetimage3_dialog import TweetImage3Dialog
 
 from utilities import get_qgis_app
 QGIS_APP = get_qgis_app()
 
 
-class TweetImageDialogTest(unittest.TestCase):
+class TweetImage3DialogTest(unittest.TestCase):
     """Test dialog works."""
 
     def setUp(self):
         """Runs before each test."""
-        self.dialog = TweetImageDialog(None)
+        self.dialog = TweetImage3Dialog(None)
 
     def tearDown(self):
         """Runs after each test."""
@@ -49,7 +49,7 @@ class TweetImageDialogTest(unittest.TestCase):
         self.assertEqual(result, QDialog.Rejected)
 
 if __name__ == "__main__":
-    suite = unittest.makeSuite(TweetImageDialogTest)
+    suite = unittest.makeSuite(TweetImage3DialogTest)
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite)
 

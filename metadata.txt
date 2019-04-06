@@ -7,17 +7,17 @@
 # This file should be included when you package your plugin.# Mandatory items:
 
 [general]
-name=Tweet Image
-qgisMinimumVersion=2.0
-description=Tweets an image of your current map canvas
-version=0.5
-author=ajggeoger
+name=Tweet Image 3
+qgisMinimumVersion=3.6
+description=Tweet your map canvas (updated for QGIS 3)
+version=0.1
+author=Al Graham
 email=llansteffan@hotmail.com
 
-about=This is a plugin that will allow you to tweet an image of your current map canvas, with associated status update.
+about=Tweet an image of the map you are currently working on.
 
-tracker=https://github.com/ajggeoger/TweetImage/issues
-repository=https://github.com/ajggeoger/TweetImage
+tracker=https://github.com/ajggeoger/TweetImage3/issues
+repository=https://github.com/ajggeoger/TweetImage3
 # End of mandatory metadata
 
 # Recommended items:
@@ -26,9 +26,9 @@ repository=https://github.com/ajggeoger/TweetImage
 # changelog=
 
 # Tags are comma separated with spaces allowed
-tags=web
+tags=twitter
 
-homepage=https://github.com/ajggeoger/TweetImage
+homepage=https://github.com/ajggeoger/TweetImage3
 category=Web
 icon=icon.png
 # experimental flag
