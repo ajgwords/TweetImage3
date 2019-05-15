@@ -1,65 +1,161 @@
-<ui version="4.0" >
- <class>TweetImage3DialogBase</class>
- <widget class="QDialog" name="TweetImage3DialogBase" >
-  <property name="geometry" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TweetImageDialogBase</class>
+ <widget class="QDialog" name="TweetImageDialogBase">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>460</width>
+    <height>349</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>Tweet Image 3</string>
+  <property name="windowTitle">
+   <string>Tweet Image</string>
   </property>
-  <widget class="QDialogButtonBox" name="button_box" >
-   <property name="geometry" >
-    <rect>
-     <x>30</x>
-     <y>240</y>
-     <width>341</width>
-     <height>32</height>
-    </rect>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <property name="fieldGrowthPolicy">
+    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
    </property>
-   <property name="orientation" >
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons" >
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
-  </widget>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Access Token</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="txtAT">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Access Token Secret</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="txtATS"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Consumer Key</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="txtCK"/>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Consumer Key Secret</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="txtCKS"/>
+   </item>
+   <item row="7" column="1">
+    <widget class="QPushButton" name="btnDelAPI">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="text">
+      <string>Delete Twitter API Details</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Twitter status update</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QCheckBox" name="chkImage">
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="text">
+      <string>Tweet image of map canvas</string>
+     </property>
+     <property name="tristate">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout"/>
+   </item>
+   <item row="12" column="1">
+    <widget class="QDialogButtonBox" name="button_box">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QLineEdit" name="txtStatus">
+     <property name="cursor">
+      <cursorShape>IBeamCursor</cursorShape>
+     </property>
+     <property name="maxLength">
+      <number>140</number>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections>
   <connection>
    <sender>button_box</sender>
    <signal>accepted()</signal>
-   <receiver>TweetImage3DialogBase</receiver>
+   <receiver>TweetImageDialogBase</receiver>
    <slot>accept()</slot>
    <hints>
-    <hint type="source_label" >
-     <x>248</x>
-     <y>254</y>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
     </hint>
-    <hint type="destination_label" >
-     <x>157</x>
-     <y>274</y>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>button_box</sender>
    <signal>rejected()</signal>
-   <receiver>TweetImage3DialogBase</receiver>
+   <receiver>TweetImageDialogBase</receiver>
    <slot>reject()</slot>
    <hints>
-    <hint type="source_label" >
-     <x>316</x>
-     <y>260</y>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
     </hint>
-    <hint type="destination_label" >
-     <x>286</x>
-     <y>274</y>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
     </hint>
    </hints>
   </connection>

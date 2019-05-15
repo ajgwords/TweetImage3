@@ -27,6 +27,12 @@ from PyQt5.QtWidgets import QAction
 
 # Initialize Qt resources from file resources.py
 from .resources import *
+
+#plugin specific imports
+from time import sleep
+import sys
+import os
+
 # Import the code for the dialog
 from .tweetimage3_dialog import TweetImage3Dialog
 import os.path
@@ -60,6 +66,9 @@ class TweetImage3:
 
             if qVersion() > '4.3.3':
                 QCoreApplication.installTranslator(self.translator)
+
+        # Create the dialog (after translation) and keep reference
+        self.dlg = TweetImage3Dialog()
 
         # Declare instance attributes
         self.actions = []
@@ -162,12 +171,17 @@ class TweetImage3:
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
-        icon_path = ':/plugins/tweetimage3/icon.png'
+        icon_path = ':/plugins/TweetImage3/icon.png'
+
         self.add_action(
             icon_path,
-            text=self.tr(u''),
+            text=self.tr(u'Tweet what you are working on'),
             callback=self.run,
             parent=self.iface.mainWindow())
+
+        # Link the delete API details button to the associated function
+        self.dlg.btnDelAPI.clicked.connect(self.delete_details)
+
 
         # will be set False in run()
         self.first_start = True
@@ -182,8 +196,33 @@ class TweetImage3:
             self.iface.removeToolBarIcon(action)
 
 
+#added in
+    def delete_details(self):
+        # Function to clear the Twitter API details from the hard drive
+        
+        #get plugin location
+        try: 
+            plugin_path = os.path.dirname(os.path.realpath(__file__))
+
+            self.dlg.txtCK.setText(str(''))
+            self.dlg.txtCKS.setText(str(''))
+            self.dlg.txtAT.setText(str(''))
+            self.dlg.txtATS.setText(str(''))
+
+            os.remove(os.path.join(plugin_path, "TwitterDetails.txt"))
+        except:
+            self.iface.messageBar().pushMessage("Note:", "No details to delete", duration=3)
+
+
     def run(self):
         """Run method that performs all the real work"""
+        try:
+            import tweepy
+            self.iface.messageBar().pushMessage("Success", "Module Tweepy found", duration=3)
+
+        except ImportError:
+            # raise Exception("Tweepy module not installed correctly")
+            self.iface.messageBar().pushCritical("Error", "Module Tweepy not found")
 
         # Create the dialog with elements (after translation) and keep reference
         # Only create GUI ONCE in callback, so that it will only load when the plugin is started
@@ -191,12 +230,69 @@ class TweetImage3:
             self.first_start = False
             self.dlg = TweetImage3Dialog()
 
+        #get plugin location
+        plugin_path = os.path.dirname(os.path.realpath(__file__))
+
+        try:
+            f = open(os.path.join(plugin_path, "TwitterDetails.txt"),"r")
+            data = f.readlines()
+            
+            self.dlg.txtCK.setText(str(data[0][:-1]))
+            self.dlg.txtCKS.setText(str(data[1][:-1]))
+            self.dlg.txtAT.setText(str(data[2][:-1]))
+            self.dlg.txtATS.setText(str(data[3][:-1]))
+            f.close()
+        except:
+            pass
+
         # show the dialog
         self.dlg.show()
+
         # Run the dialog event loop
         result = self.dlg.exec_()
+        
+        #check for txt file and populate boxes if it exists
+        consumer_key = self.dlg.txtCK.text()
+        consumer_secret = self.dlg.txtCKS.text()
+        access_token = self.dlg.txtAT.text()
+        access_token_secret = self.dlg.txtATS.text()
+
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
+
+        api = tweepy.API(auth)       
+        
+ 
+        if self.dlg.chkImage.isChecked() == True:
+            self.iface.mapCanvas().saveAsImage(os.path.join(plugin_path, "TweetImage.png"))
+       
         # See if OK was pressed
         if result:
-            # Do something useful here - delete the line containing pass and
-            # substitute with your code.
-            pass
+
+            mystatus = self.dlg.txtStatus.text()
+            image = os.path.join(plugin_path, "TweetImage.png")
+
+            #Check and send
+            if len(mystatus) > 0 and self.dlg.chkImage.isChecked() == False:
+                api.update_status(mystatus)
+            if len(mystatus) > 0 and self.dlg.chkImage.isChecked() == True:
+                api.update_with_media(image, mystatus)
+
+            #write contents of txt boxes to file
+            f = open(os.path.join(plugin_path, 'TwitterDetails.txt'),'w')
+            f.write(self.dlg.txtCK.text()+'\n')
+            f.write(self.dlg.txtCKS.text()+'\n')
+            f.write(self.dlg.txtAT.text()+'\n')
+            f.write(self.dlg.txtATS.text()+'\n')
+            f.close()
+
+            #delete image and pngw
+            try:
+                os.remove(os.path.join(plugin_path, "TweetImage.png"))
+                os.remove(os.path.join(plugin_path, "TweetImage.pgw"))
+
+            except:
+                self.iface.messageBar().pushMessage("Note:", "No image files found to remove", duration=5)
+
+            #clear text from message bar
+            self.dlg.txtStatus.setText(str(''))
