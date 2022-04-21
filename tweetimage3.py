@@ -276,7 +276,11 @@ class TweetImage3:
             if len(mystatus) > 0 and self.dlg.chkImage.isChecked() == False:
                 api.update_status(mystatus)
             if len(mystatus) > 0 and self.dlg.chkImage.isChecked() == True:
-                api.update_with_media(image, mystatus)
+                #api.update_with_media(image, mystatus)
+                # Upload media to Twitter
+                ret = api.media_upload(image)
+                # Attach returned media id to a tweet
+                api.update_status(media_ids=[ret.media_id_string], status=mystatus)
 
             #write contents of txt boxes to file
             f = open(os.path.join(plugin_path, 'TwitterDetails.txt'),'w')
